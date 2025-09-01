@@ -1,0 +1,107 @@
+{
+  "metadata": {
+    "created_at": "2024-01-01T00:00:00",
+    "version": "1.0",
+    "description": "Default Router Simulator Configuration"
+  },
+  "devices": {
+    "Router1": {
+      "name": "Router1",
+      "type": "router",
+      "online": true,
+      "interfaces": {
+        "g0/0": {
+          "name": "g0/0",
+          "ip_address": "192.168.1.1",
+          "is_up": true,
+          "outgoing_queue_size": 0,
+          "incoming_queue_size": 0
+        },
+        "g0/1": {
+          "name": "g0/1",
+          "ip_address": "10.0.0.1",
+          "is_up": true,
+          "outgoing_queue_size": 0,
+          "incoming_queue_size": 0
+        }
+      }
+    },
+    "Switch1": {
+      "name": "Switch1",
+      "type": "switch",
+      "online": true,
+      "interfaces": {
+        "g0/1": {
+          "name": "g0/1",
+          "ip_address": null,
+          "is_up": true,
+          "outgoing_queue_size": 0,
+          "incoming_queue_size": 0
+        },
+        "g0/2": {
+          "name": "g0/2",
+          "ip_address": null,
+          "is_up": true,
+          "outgoing_queue_size": 0,
+          "incoming_queue_size": 0
+        }
+      }
+    },
+    "PC1": {
+      "name": "PC1",
+      "type": "host",
+      "online": true,
+      "interfaces": {
+        "eth0": {
+          "name": "eth0",
+          "ip_address": "10.0.0.2",
+          "is_up": true,
+          "outgoing_queue_size": 0,
+          "incoming_queue_size": 0
+        }
+      }
+    },
+    "PC2": {
+      "name": "PC2",
+      "type": "host",
+      "online": true,
+      "interfaces": {
+        "eth0": {
+          "name": "eth0",
+          "ip_address": "192.168.1.100",
+          "is_up": true,
+          "outgoing_queue_size": 0,
+          "incoming_queue_size": 0
+        }
+      }
+    }
+  },
+  "connections": [
+    {
+      "device1": "Router1",
+      "interface1": "g0/0",
+      "device2": "Switch1", 
+      "interface2": "g0/1"
+    },
+    {
+      "device1": "Switch1",
+      "interface1": "g0/2", 
+      "device2": "PC1",
+      "interface2": "eth0"
+    },
+    {
+      "device1": "Router1",
+      "interface1": "g0/1",
+      "device2": "PC2", 
+      "interface2": "eth0"
+    }
+  ],
+  "statistics": {
+    "total_packets_sent": 0,
+    "delivered": 0,
+    "dropped_ttl": 0,
+    "dropped_firewall": 0,
+    "average_hops": 0,
+    "top_talker": null
+  }
+}
