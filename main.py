@@ -245,6 +245,7 @@ def main():
     print("• policy set <prefix> <mask> <ttl-min N | block> - Set policy")
     print("• no shutdown               - Enable interface")
     print("• connect <if1> <dev2> <if2> - Connect devices")
+    print("• add device <name> <type>  - Add new device (router/switch/host)")
     print("• send <dest_ip> <message>  - Send packet")
     print("• tick                      - Process network queues")
     print("• show ip route             - Show AVL routing table")

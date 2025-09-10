@@ -37,6 +37,8 @@ class CLIContext:
                 "disconnect": DisconnectCommand(),
                 "set_device_status": SetDeviceStatusCommand(),
                 "list_devices": ListDevicesCommand(),
+                "add": AddDeviceCommand(),
+                "send": SendCommand(),
                 "show": ShowCommand(),
                 "save": SaveSnapshotCommand(),
                 "load": LoadConfigCommand(),
@@ -128,6 +130,8 @@ class CLIContext:
                 return "policy", args
             elif command == "btree" and len(args) >= 1 and args[0].lower() == "stats":
                 return "btree", ["stats"]
+            elif command == "add" and len(args) >= 1:
+                return "add", args
             
             return command, args
             

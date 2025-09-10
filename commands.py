@@ -773,3 +773,46 @@ class ShowErrorLogCommand(Command):
     
     def get_help(self):
         return "show error-log [n] - Display error log (optional limit)"
+
+class AddDeviceCommand(Command):
+    """Comando add device - agrega un nuevo dispositivo a la red"""
+    
+    def execute(self, cli_context, args):
+        if cli_context.current_mode != "privileged":
+            return False, "Must be in privileged mode"
+        
+        if len(args) < 2:
+            return False, "Usage: add device <name> <type>"
+        
+        if args[0] != "device":
+            return False, "Usage: add device <name> <type>"
+        
+        device_name = args[1]
+        device_type = args[2] if len(args) > 2 else "router"
+        
+        # Validar nombre del dispositivo
+        if not self._validate_device_name(device_name):
+            return False, "Invalid device name format"
+        
+        # Validar tipo del dispositivo
+        valid_types = ["router", "switch", "host"]
+        if device_type.lower() not in valid_types:
+            return False, f"Device type must be one of: {', '.join(valid_types)}"
+        
+        # Verificar si el dispositivo ya existe
+        if cli_context.network.get_device(device_name):
+            return False, f"Device {device_name} already exists"
+        
+        # Agregar el dispositivo a la red
+        if cli_context.network.add_device(device_name, device_type.lower()):
+            return True, f"Device {device_name} ({device_type}) added successfully"
+        else:
+            return False, f"Failed to add device {device_name}"
+    
+    def _validate_device_name(self, device_name):
+        """Valida el formato del nombre del dispositivo"""
+        pattern = r'^[a-zA-Z0-9][a-zA-Z0-9\-_]*[a-zA-Z0-9]$|^[a-zA-Z0-9]$'
+        return re.match(pattern, device_name) and len(device_name) <= 64
+    
+    def get_help(self):
+        return "add device <name> <type> - Add a new device to the network (types: router, switch, host)"
